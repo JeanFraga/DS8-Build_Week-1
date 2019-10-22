@@ -29,9 +29,13 @@ column1 = dbc.Col(
         dcc.Markdown(
             """
         
-            ## Value Proposition
+            ## What rating will your restaurant receive?
 
-            Emphasize how the app will benefit users. Don't emphasize the underlying technology.
+            This data allows us to predict the possible rating a user might give based on his profile and the information available about the restaurant. The ratings we can predict are:
+            
+            1. Overal rating
+            2. Food rating
+            3. Service rating
 
             ✅ RUN is a running app that adapts to your fitness levels and designs personalized workouts to help you improve your running.
 
@@ -39,7 +43,7 @@ column1 = dbc.Col(
 
             """
         ),
-        dcc.Link(dbc.Button('Call To Action', color='primary'), href='/predictions')
+        dcc.Link(dbc.Button('Find Out!', color='primary'), href='/predictions')
     ],
     md=4,
 )
