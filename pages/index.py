@@ -16,9 +16,9 @@ from app import app
 url = 'https://raw.githubusercontent.com/JeanFraga/DS8-Build_Week-1/master/notebooks/Restaurant_Consumer_Data_merged'
 
 df = pd.read_csv(url)
-pipeline1 = load('assets/xgboost_model_y1.joblib.compressed')
-pipeline2 = load('assets/xgboost_model_y2.joblib.compressed')
-pipeline3 = load('assets/xgboost_model_y3.joblib.compressed')
+pipeline1 = load('assets/xgboost_model_y1.joblib')
+pipeline2 = load('assets/xgboost_model_y2.joblib')
+pipeline3 = load('assets/xgboost_model_y3.joblib')
 pipelines = {}
 pipelines['pipeline1'] = pipeline1
 pipelines['pipeline2'] = pipeline2
