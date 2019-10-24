@@ -75,7 +75,7 @@ column1 = dbc.Col(
 
 
 importances = pd.Series(pipeline.best_estimator_.named_steps['xgbclassifier'].feature_importances_, X.columns)
-n=50
+n=25
 importances = importances.sort_values()[-n:]
 importances = importances.to_frame().reset_index()
 importances.columns=['column1','column2']
