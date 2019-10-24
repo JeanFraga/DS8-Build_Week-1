@@ -4,33 +4,33 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 import plotly.express as px
-# import pandas as pd
-# from joblib import load
-# from xgboost import XGBClassifier
-# import category_encoders as ce
-# from sklearn.pipeline import make_pipeline
-# from sklearn.model_selection import GridSearchCV, StratifiedKFold
+import pandas as pd
+from joblib import load
+from xgboost import XGBClassifier
+import category_encoders as ce
+from sklearn.pipeline import make_pipeline
+from sklearn.model_selection import GridSearchCV, StratifiedKFold
 
 from app import app
 
-# url = 'https://raw.githubusercontent.com/JeanFraga/DS8-Build_Week-1/master/notebooks/Restaurant_Consumer_Data_merged'
+url = 'https://raw.githubusercontent.com/JeanFraga/DS8-Build_Week-1/master/notebooks/Restaurant_Consumer_Data_merged'
 
-# df = pd.read_csv(url)
-# pipeline1 = load('assets/xgboost_model_y1.joblib.compressed')
-# pipeline2 = load('assets/xgboost_model_y2.joblib.compressed')
-# pipeline3 = load('assets/xgboost_model_y3.joblib.compressed')
-# pipelines = {}
-# pipelines['pipeline1'] = pipeline1
-# pipelines['pipeline2'] = pipeline2
-# pipelines['pipeline3'] = pipeline3
-# target1 = 'rating'
-# target2 = 'food_rating'
-# target3 = 'service_rating'
+df = pd.read_csv(url)
+pipeline1 = load('assets/xgboost_model_y1.joblib.compressed')
+pipeline2 = load('assets/xgboost_model_y2.joblib.compressed')
+pipeline3 = load('assets/xgboost_model_y3.joblib.compressed')
+pipelines = {}
+pipelines['pipeline1'] = pipeline1
+pipelines['pipeline2'] = pipeline2
+pipelines['pipeline3'] = pipeline3
+target1 = 'rating'
+target2 = 'food_rating'
+target3 = 'service_rating'
 
-# X = df.drop(columns=[target1, target2, target3])
-# y1 = df[target1]
-# y2 = df[target2]
-# y3 = df[target3]
+X = df.drop(columns=[target1, target2, target3])
+y1 = df[target1]
+y2 = df[target2]
+y3 = df[target3]
 
 
 """
@@ -87,9 +87,9 @@ column1 = dbc.Col(
 
 # fig = px.bar(importances,y='column1',x='column2',title=f'Top {n} features',  orientation='h',width=700, height=700)
 
-gapminder = px.data.gapminder()
-fig = px.scatter(gapminder.query("year==2007"), x="gdpPercap", y="lifeExp", size="pop", color="continent",
-           hover_name="country", log_x=True, size_max=80)
+# gapminder = px.data.gapminder()
+# fig = px.scatter(gapminder.query("year==2007"), x="gdpPercap", y="lifeExp", size="pop", color="continent",
+#            hover_name="country", log_x=True, size_max=80)
 
 column2 = dbc.Col(
     [
@@ -102,24 +102,24 @@ column2 = dbc.Col(
                 ],
             value='pipeline1'
             ),
-        dcc.Graph(figure=fig), # ,id='feature_importance_graph'
+        dcc.Graph(id='feature_importance_graph'), # figure=fig,
     ]
 )
 
 layout = dbc.Row([column1, column2])
 
-# @app.callback(
-#     Output(component_id='feature_importance_graph',component_property='figure'),
-#     [Input(component_id='rating_options', component_property='value')]
-#     )
-# def feature_importance_per_rating(what_pipeline):
+@app.callback(
+    Output(component_id='feature_importance_graph',component_property='figure'),
+    [Input(component_id='rating_options', component_property='value')]
+    )
+def feature_importance_per_rating(what_pipeline):
 
-#     importances = pd.Series(pipelines[what_pipeline].best_estimator_.named_steps['xgbclassifier'].feature_importances_, X.columns)
-#     n=25
-#     importances = importances.sort_values()[-n:]
-#     importances = importances.to_frame().reset_index()
-#     importances.columns=['features','importance']
-#     return px.bar(importances,y='features',x='importance',title=f'Top {n} features',  orientation='h',width=700, height=700)
+    importances = pd.Series(pipelines[what_pipeline].best_estimator_.named_steps['xgbclassifier'].feature_importances_, X.columns)
+    n=25
+    importances = importances.sort_values()[-n:]
+    importances = importances.to_frame().reset_index()
+    importances.columns=['features','importance']
+    return px.bar(importances,y='features',x='importance',title=f'Top {n} features',  orientation='h',width=700, height=700)
 
 # row= X.iloc[[200]]
 # explainer = shap.TreeExplainer(pipeline.best_estimator_.named_steps['xgbclassifier'])
