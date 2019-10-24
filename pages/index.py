@@ -6,7 +6,7 @@ from dash.dependencies import Input, Output
 import plotly.express as px
 import pandas as pd
 from joblib import load
-import shap
+#import shap
 from xgboost import XGBClassifier
 import category_encoders as ce
 from sklearn.pipeline import make_pipeline
@@ -15,7 +15,10 @@ from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from app import app
 
 
-df = pd.read_csv('assets/restaurant_data_with_consumer_ratings_merged',index_col=0)
+# df = pd.read_csv('assets/restaurant_data_with_consumer_ratings_merged',index_col=0)
+url = 'https://raw.githubusercontent.com/JeanFraga/DS8-Build_Week-1/master/notebooks/Restaurant_Consumer_Data_merged'
+
+df = pd.read_csv(url)
 pipeline = load('assets/xgboost_model_y1.joblib.compressed')
 target1 = 'rating'
 target2 = 'food_rating'
@@ -102,7 +105,7 @@ column1 = dbc.Col(
 
 # fig = px.bar(importances,y='column1',x='column2',title=f'Top {n} features',  orientation='h',width=700, height=700)
 
-# gapminder = px.data.gapminder()
+gapminder = px.data.gapminder()
 fig = px.scatter(gapminder.query("year==2007"), x="gdpPercap", y="lifeExp", size="pop", color="continent",
            hover_name="country", log_x=True, size_max=80)
 
