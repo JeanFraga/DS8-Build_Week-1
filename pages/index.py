@@ -91,11 +91,11 @@ column1 = dbc.Col(
 
 # Get feature importances
 #pipeline.best_estimator_.named_steps['xgbclassifier']
-# importances = pd.Series(pipeline.best_estimator_.named_steps['xgbclassifier'].feature_importances_, X.columns)
-# n=50
-# importances = importances.sort_values()[-n:]
-# importances = importances.to_frame().reset_index()
-# importances.columns=['column1','column2']
+importances = pd.Series(pipeline.best_estimator_.named_steps['xgbclassifier'].feature_importances_, X.columns)
+n=50
+importances = importances.sort_values()[-n:]
+importances = importances.to_frame().reset_index()
+importances.columns=['column1','column2']
 
 # Plot feature importances
 # %matplotlib inline
@@ -103,11 +103,11 @@ column1 = dbc.Col(
 
 
 
-# fig = px.bar(importances,y='column1',x='column2',title=f'Top {n} features',  orientation='h',width=700, height=700)
+fig = px.bar(importances,y='column1',x='column2',title=f'Top {n} features',  orientation='h',width=700, height=700)
 
-gapminder = px.data.gapminder()
-fig = px.scatter(gapminder.query("year==2007"), x="gdpPercap", y="lifeExp", size="pop", color="continent",
-           hover_name="country", log_x=True, size_max=80)
+# gapminder = px.data.gapminder()
+# fig = px.scatter(gapminder.query("year==2007"), x="gdpPercap", y="lifeExp", size="pop", color="continent",
+#            hover_name="country", log_x=True, size_max=80)
 
 column2 = dbc.Col(
     [
