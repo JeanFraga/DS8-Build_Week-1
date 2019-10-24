@@ -1,9 +1,12 @@
 import dash
-import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_daq as daq
 import dash_html_components as html
 from dash.dependencies import Input, Output
+
+import dash_bootstrap_components as dbc
+from app import app
+
 # from pdpbox.pdp import pdp_isolate, pdp_plot
 # import pandas as pd
 # from joblib import load
@@ -13,7 +16,6 @@ from dash.dependencies import Input, Output
 # from sklearn.model_selection import GridSearchCV, StratifiedKFold
 
 
-from app import app
 
 # url = 'https://raw.githubusercontent.com/JeanFraga/DS8-Build_Week-1/master/notebooks/Restaurant_Consumer_Data_merged'
 
@@ -51,14 +53,14 @@ column1 = dbc.Col(
         
             ## Predictions
 
-            The machine learning software I used allowed me to make a prediction with varying degrees of success depending on what type of rating I was trying to predict.
+            The machine learning software I used allowed me to make a prediction with varying degrees of success depending on what type of rating I'm trying to predict.
 
-            The following are the percentages I was able to achieve through tweeking my machine learning software and engineering features.
+            The following percentages correspond to the level of accuracy I was able to compute with the machine learning algorithm.
 
             1. Overal rating : 62%
             2. Food rating: 60%
             3. Service rating: 59%
-
+            
             Taking a closer look at what information each User chose to give in their profile and what information the dataset managed to gather about the restaurant itself we can see some trends arise.
 
             👉 We can start by taking a look at the numerical feature "Height" and it's effect on the "Overal rating". As you might recall it was top 5 for the features that had the highest effect
@@ -72,7 +74,7 @@ column1 = dbc.Col(
 
 column2 = dbc.Col(
     [
-        html.Img(src='assets/pdp_heights_y1.PNG', className='img-fluid')
+        html.Img(src=app.get_asset_url('pdp_heights_y1.PNG'), className='img-fluid')
     ]
 )
 
