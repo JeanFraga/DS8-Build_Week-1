@@ -60,15 +60,11 @@ column1 = dbc.Col(
             2. Food rating
             3. Service rating
 
-            👉 With the graph on the right you can choose a row from the total data and see what my model predicts he/she will vote.
-
             My project revolves around the data gathered from 130 restaurants in Mexico and subsequently the rating those received from 138 users. 
-            
-            This data has a lot of information we can use to make a prediction. Listed below are just a few I have picked out to show the ones that had the most impact on all three ratings.
 
-            'ulatitude', 'height', 'upays_cash', 'upays_visa', 'ucuisine_cafeteria',
-            'ucuisine_family', 'ucuisine_pizzeria', 'utotal_cuisine', 'franchise',
-            'rcuisine_bar_pub_brewery', 'rcuisine_burgers', 'rtotal_cuisine'
+            👉 With the graph on the right you can choose one of the 3 ratings and see what features mattered the most when predicting what rating the restaurant would receive by each user.
+
+            If you would like to see how changing some of these features individually affect the rating the restaurant is likely to receive please click below.
 
             """
         ),
@@ -76,6 +72,32 @@ column1 = dbc.Col(
     ],
     md=4,
 )
+
+
+importances = pd.Series(pipeline.best_estimator_.named_steps['xgbclassifier'].feature_importances_, X.columns)
+n=50
+importances = importances.sort_values()[-n:]
+importances = importances.to_frame().reset_index()
+importances.columns=['column1','column2']
+
+fig = px.bar(importances,y='column1',x='column2',title=f'Top {n} features',  orientation='h',width=700, height=700)
+
+column2 = dbc.Col(
+    [
+        dcc.Dropdown(
+            options=[
+                {'label': '1. Overal Rating', 'value': '1'},
+                {'label': '2. Food Rating', 'value': '2'},
+                {'label': '3. Service Rating', 'value': '3'}
+                ],
+            value='1'
+            ),
+        dcc.Graph(figure=fig),
+    ]
+)
+
+layout = dbc.Row([column1, column2])
+
 
 # row= X.iloc[[200]]
 # explainer = shap.TreeExplainer(pipeline.best_estimator_.named_steps['xgbclassifier'])
@@ -91,28 +113,9 @@ column1 = dbc.Col(
 
 # Get feature importances
 #pipeline.best_estimator_.named_steps['xgbclassifier']
-importances = pd.Series(pipeline.best_estimator_.named_steps['xgbclassifier'].feature_importances_, X.columns)
-n=50
-importances = importances.sort_values()[-n:]
-importances = importances.to_frame().reset_index()
-importances.columns=['column1','column2']
-
 # Plot feature importances
 # %matplotlib inline
 # import matplotlib.pyplot as plt
-
-
-
-fig = px.bar(importances,y='column1',x='column2',title=f'Top {n} features',  orientation='h',width=700, height=700)
-
 # gapminder = px.data.gapminder()
 # fig = px.scatter(gapminder.query("year==2007"), x="gdpPercap", y="lifeExp", size="pop", color="continent",
 #            hover_name="country", log_x=True, size_max=80)
-
-column2 = dbc.Col(
-    [
-        dcc.Graph(figure=fig),
-    ]
-)
-
-layout = dbc.Row([column1, column2])
