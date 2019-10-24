@@ -19,7 +19,13 @@ from app import app
 url = 'https://raw.githubusercontent.com/JeanFraga/DS8-Build_Week-1/master/notebooks/Restaurant_Consumer_Data_merged'
 
 df = pd.read_csv(url)
-pipeline = load('assets/xgboost_model_y1.joblib.compressed')
+pipeline1 = load('assets/xgboost_model_y1.joblib.compressed')
+pipeline2 = load('assets/xgboost_model_y2.joblib.compressed')
+pipeline3 = load('assets/xgboost_model_y3.joblib.compressed')
+pipelines = {}
+pipelines['pipeline1'] = pipeline1
+pipelines['pipeline2'] = pipeline2
+pipelines['pipeline3'] = pipeline3
 target1 = 'rating'
 target2 = 'food_rating'
 target3 = 'service_rating'
@@ -64,7 +70,7 @@ column1 = dbc.Col(
 
             👉 With the graph on the right you can choose one of the 3 ratings and see what features mattered the most when predicting what rating the restaurant would receive by each user.
 
-            If you would like to see how changing some of these features individually affect the rating the restaurant is likely to receive please click below.
+            👇 If you would like to see how changing some of these features individually affect the rating the restaurant is likely to receive please click below.
 
             """
         ),
@@ -74,30 +80,44 @@ column1 = dbc.Col(
 )
 
 
-importances = pd.Series(pipeline.best_estimator_.named_steps['xgbclassifier'].feature_importances_, X.columns)
-n=25
-importances = importances.sort_values()[-n:]
-importances = importances.to_frame().reset_index()
-importances.columns=['column1','column2']
+# importances = pd.Series(pipeline1.best_estimator_.named_steps['xgbclassifier'].feature_importances_, X.columns)
+# n=25
+# importances = importances.sort_values()[-n:]
+# importances = importances.to_frame().reset_index()
+# importances.columns=['column1','column2']
 
-fig = px.bar(importances,y='column1',x='column2',title=f'Top {n} features',  orientation='h',width=700, height=700)
+# fig = px.bar(importances,y='column1',x='column2',title=f'Top {n} features',  orientation='h',width=700, height=700)
 
 column2 = dbc.Col(
     [
         dcc.Dropdown(
+            id='rating_options',
             options=[
-                {'label': '1. Overal Rating', 'value': '1'},
-                {'label': '2. Food Rating', 'value': '2'},
-                {'label': '3. Service Rating', 'value': '3'}
+                {'label': '1. Overal Rating', 'value': 'pipeline1'},
+                {'label': '2. Food Rating', 'value': 'pipeline2'},
+                {'label': '3. Service Rating', 'value': 'pipeline3'}
                 ],
-            value='1'
+            value='pipeline1'
             ),
-        dcc.Graph(figure=fig),
+        dcc.Graph(id='feature_importance_graph'), # ,figure=fig
     ]
 )
 
 layout = dbc.Row([column1, column2])
 
+@app.callback(
+    Output(component_id='feature_importance_graph',component_property='figure'),
+    [Input(component_id='rating_options', component_property='value')]
+    )
+def feature_importance_per_rating(what_pipeline):
+
+    importances = pd.Series(pipelines[what_pipeline].best_estimator_.named_steps['xgbclassifier'].feature_importances_, X.columns)
+    n=25
+    importances = importances.sort_values()[-n:]
+    importances = importances.to_frame().reset_index()
+    importances.columns=['features','importance']
+    # fig = 
+    return px.bar(importances,y='features',x='importance',title=f'Top {n} features',  orientation='h',width=700, height=700)
 
 # row= X.iloc[[200]]
 # explainer = shap.TreeExplainer(pipeline.best_estimator_.named_steps['xgbclassifier'])
