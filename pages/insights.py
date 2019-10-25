@@ -47,7 +47,8 @@ column1 = dbc.Col(
 
 column2 = dbc.Col(
     [
-        html.Img(src=app.get_asset_url('restaurant_payments.png'), className='img-fluid')
+        html.Img(src=app.get_asset_url('restaurant_payments.png'), className='img-fluid'),
+        html.Img(src=app.get_asset_url('user_payments.png'), className='img-fluid')
     ]
 )
 
