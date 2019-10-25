@@ -13,7 +13,7 @@ from sklearn.model_selection import GridSearchCV, StratifiedKFold
 
 from app import app
 
-# url = 'https://raw.githubusercontent.com/JeanFraga/DS8-Build_Week-1/master/notebooks/Restaurant_Consumer_Data_merged'
+url = 'https://raw.githubusercontent.com/JeanFraga/DS8-Build_Week-1/master/notebooks/Restaurant_Consumer_Data_merged'
 
 df = pd.read_csv(url)
 pipeline1 = load('assets/xgboost_model_y1.joblib')

@@ -74,7 +74,7 @@ column1 = dbc.Col(
 
 column2 = dbc.Col(
     [
-        html.Img(src=app.get_asset_url('/pdp_heights_y1.PNG'), className='img-fluid')
+        html.Img(src=app.get_asset_url('pdp_heights_y1.PNG'), className='img-fluid')
     ]
 )
 
