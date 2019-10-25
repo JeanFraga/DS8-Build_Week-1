@@ -66,8 +66,11 @@ column1 = dbc.Col(
             👉 We can start by taking a look at the numerical feature "Height" and it's effect on the "Overal rating". As you might recall it was top 5 for the features that had the highest effect
             on what rating the user might give a restaurant they rated.
 
+
+
             """
         ),
+        dcc.Link(dbc.Button('There is more!', color='dark'), href='/insights')
     ],
     md=4,
 )
