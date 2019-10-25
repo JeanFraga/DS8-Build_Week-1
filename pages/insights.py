@@ -38,6 +38,10 @@ column1 = dbc.Col(
 
             👉 please take a look at some interesting interactions I found before I even started to model the data.
 
+            If you would like to take a closer look at some of the features I worked with please visit:
+            
+             https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data
+
             """
         ),
     ],
