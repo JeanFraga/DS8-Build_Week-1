@@ -25,7 +25,7 @@ column1 = dbc.Col(
 
             """
         ),
-        html.Img(src=app.get_asset_url('shapely_graph_row_432.png'), className='img-fluid'),
+        html.Img(src=app.get_asset_url('shapely_graph_row_432.PNG'), className='img-fluid'),
     ],
 )
 
