@@ -23,6 +23,10 @@ column1 = dbc.Col(
 
             I go more into more depth in my notebooks but here is a shapely graphs that shows how my model interacted with row "432".
 
+            A link to my notebook is included below where the GitHub link resides. 
+
+            Thank you for taking your time to read my through my second project. I'm looking forward to what comes next. 😊
+
             """
         ),
         html.Img(src=app.get_asset_url('shapely_graph_row_432.PNG'), className='img-fluid'),
